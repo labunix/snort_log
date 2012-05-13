@@ -1,0 +1,5 @@
+script name : snort_del_log.sh
+default.
+  for debian squeeze snort tcpdump.log.*
+  older than 14 days ago,delete it.
+
