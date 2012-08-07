@@ -74,7 +74,7 @@ if [ `wc -l < $SYSLOG` -eq "0" ];then
 fi
 
 test -r ${SYSLOG} && \
-  grep "^${MYOPT} `hostname -s` ${TARGET}.*\:" ${SYSLOG} > ${MYLOG}
+  grep "^${MYOPT} `hostname -s` ${TARGET}" ${SYSLOG} > ${MYLOG}
 
 # line not 0 check
 test -r ${MYLOG} || exit 1
