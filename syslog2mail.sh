@@ -63,7 +63,7 @@ h)
 m)
   MYOPT=$MYMIN;
   MYMSG="${MYMINMSG}"
-  echo -e "DEBUG\n$MYOPT";exit 0
+  # echo -e "DEBUG\n$MYOPT";exit 0
   ;;
 *)
   echo "$USAGE"
