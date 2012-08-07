@@ -44,10 +44,10 @@ MYHOURMSG='1 hour ago'
 MYHOUR=`env LANG=C date -d "${MYHOURMSG}" '+%b:%d:%T' | \
    awk -F\: '{print $1" *"$2+0" "$3"\\\:[0-9][09]\\\:[0-9][0-9]"}'`
 
-# 10 min ago -> 20min [n][0-9]～[n+1][0-9]
+# 10 min ago -> 1-9min
 MYMINMSG='10 min ago'
 MYMIN=`env LANG=C date -d "${MYMINMSG}" '+%b:%d:%T' | \
-   awk -F\: '{print $1" *"$2+0" "$3"\\\:["($4-($4%10))/10"-"(($4+10)-($4%10))/10"][0-9]\\\:[0-9][0-9]"}'`
+   awk -F\: '{print $1" *"$2+0" "$3"\\\:"($4-($4%10))/10"[0-9]\\\:[0-9][0-9]"}'`
 
 case $@ in
 d)
@@ -63,7 +63,7 @@ h)
 m)
   MYOPT=$MYMIN;
   MYMSG="${MYMINMSG}"
-  # echo -e "DEBUG\n$MYOPT";exit 0
+   echo -e "DEBUG\n$MYOPT";exit 0
   ;;
 *)
   echo "$USAGE"
