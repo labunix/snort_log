@@ -7,6 +7,7 @@
 #		:	d	1 days ago
 #		:	h	1 hour ago
 #		:	m	5 min ago 
+# License	:	GNU General Public License
 
 function varclean() {
   unset MAILTO MYMSG MYLOG SYSLOG MYOPT MYLOG TARGET USAGE
