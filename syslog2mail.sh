@@ -37,31 +37,33 @@ fi
 # 1 days ago
 MYDAYMSG='1 days ago'
 MYDAY=`env LANG=C date -d "${MYDAYMSG}" '+%b %d' | \
-   awk '{if($2<10) print $1"  "$2+0" [0-9][0-9]\\\:[0-9][09]\\\:[0-9][0-9]" ;
-              else print $1" "$2+0" [0-9][0-9]\\\:[0-9][09]\\\:[0-9][0-9]"}'`
+   awk '{print $1" *"$2+0" [0-9][0-9]\\\:[0-9][09]\\\:[0-9][0-9]"}'`
 
 # 1 hour ago
 MYHOURMSG='1 hour ago'
-MYHOUR=`env LANG=C date -d "${MYHOURMSG}" '+%T' | \
-   awk -F\: '{print $1"\\\:[0-9][09]\\\:[0-9][0-9]"}'`
+MYHOUR=`env LANG=C date -d "${MYHOURMSG}" '+%b:%d:%T' | \
+   awk -F\: '{print $1" *"$2+0" "$3"\\\:[0-9][09]\\\:[0-9][0-9]"}'`
 
 # 5 min ago
 MYMINMSG='5 min ago'
-MYMIN=`env LANG=C date -d "${MYMINMSG}" '+%T' | \
-   awk -F\: '{print $1"\\\:"$2"\\\:[0-9][0-9]"}'`
+MYMIN=`env LANG=C date -d "${MYMINMSG}" '+%b:%d:%T' | \
+   awk -F\: '{print $1" *"$2+0" "$3"\\\:"$4"\\\:[0-9][0-9]"}'`
 
 case $@ in
 d)
   MYOPT=$MYDAY;
   MYMSG="${MYDAYMSG}";
+  # echo -e "DEBUG\n$MYOPT";exit 0
   ;;
 h)
   MYOPT=$MYHOUR;
   MYMSG="${MYHOURMSG}"
+  # echo -e "DEBUG\n$MYOPT";exit 0
   ;;
 m)
   MYOPT=$MYMIN;
   MYMSG="${MYMINMSG}"
+  # echo -e "DEBUG\n$MYOPT";exit 0
   ;;
 *)
   echo "$USAGE"
