@@ -44,7 +44,7 @@ MYHOURMSG='1 hour ago'
 MYHOUR=`env LANG=C date -d "${MYHOURMSG}" '+%b:%d:%T' | \
    awk -F\: '{print $1" *"$2+0" "$3"\\\:[0-9][09]\\\:[0-9][0-9]"}'`
 
-# 10 min ago -> 1-9min
+# 10 min ago -> 0-9min
 MYMINMSG='10 min ago'
 MYMIN=`env LANG=C date -d "${MYMINMSG}" '+%b:%d:%T' | \
    awk -F\: '{print $1" *"$2+0" "$3"\\\:"($4-($4%10))/10"[0-9]\\\:[0-9][0-9]"}'`
@@ -63,7 +63,7 @@ h)
 m)
   MYOPT=$MYMIN;
   MYMSG="${MYMINMSG}"
-   echo -e "DEBUG\n$MYOPT";exit 0
+  # echo -e "DEBUG\n$MYOPT";exit 0
   ;;
 *)
   echo "$USAGE"
