@@ -87,7 +87,7 @@ if [ `wc -l < ${MYLOG}` -eq "0" ];then
 fi
 
 sed s/`hostname -s`" >*snort\[[0-9]*\]\: "//g "$MYLOG" | \
-  mail -s "$TARGET $MYMSG report" "$MAILTO"
+  mail -s "$TARGET $MYMSG alert report" "$MAILTO"
 test -f "$MYLOG" && rm -f "$MYLOG"
 varclean
 exit 0
