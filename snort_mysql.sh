@@ -8,7 +8,9 @@ chown root:root $0 || exit 1
 chmod 700 $0 || exit 1
 
 SQLLOG="/var/log/snort/snort_mysql_`date '+%Y%m%d'`.log"
+SQLHTML="/var/log/snort/snort_mysql_`date '+%Y%m%d'`.html"
 touch "$SQLLOG" || exit 2
+touch "$SQLHTML" || exit 2
 
 DBNAME="snort"
 SQLMAIL="root@`hostname -f`"
@@ -72,7 +74,23 @@ if [ `wc -l < "$ACCOUNT"` -ne 1 ];then
 fi
 
 #echo -e "DEBUG:\n";cat "$ACCOUNT";exit 0 
+
+# main
 mysql -u snort --password=`cat "$ACCOUNT"` -D "$DBNAME" < "$SQLCOM" > "$SQLLOG"
+
+# to SystemMail
 cat "$SQLLOG" | mail -s "snort mysql summary" "$SQLMAIL"
-unset ACCOUNT DBNAME SQLCOM SQLLOG SQLMAIL
+
+# to html
+echo '<html><head><title>snort mysql table report</title></head>' > "$SQLHTML"
+echo '<body><table border="1">' >> "$SQLHTML"
+grep -v "^\$" "$SQLLOG" | sed s/"\t"/"\,"/g      | \
+  sed s%"\,"%'<\/td><td>'%g                      | \
+  sed s/"^"/'<tr><td>'/g                         | \
+  sed s%"\$"%'</td></tr>'%g                      | \
+  sed s%"^[A-z]"%'</table><table border="1">'%   | \
+  sed s%"<tr>\|</td>"%"&\n"%g | sed s%"<td>"%"\t&"%g >> "$SQLHTML"
+echo -e '</table>\n</html>' >> "$SQLHTML"
+
+unset ACCOUNT DBNAME SQLCOM SQLLOG SQLMAIL SQLHTML
 exit 0
