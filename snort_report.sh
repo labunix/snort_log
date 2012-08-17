@@ -49,5 +49,5 @@ w3m -no-proxy -dump -cols 80 "${DBLOG}" | \
   mail -s "Snort db Signature Report `env LANG=C date '+%Y/%m/%d %H:%M%S'`" \
   "${MAILTO}"
 
-unset DBCOM MYSQL_PGSQL
+unset DBCOM DBLOG MYSQL_PGSQL MAILTO
 exit 0
