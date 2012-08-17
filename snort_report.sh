@@ -24,6 +24,7 @@ MYSQL_PGSQL=$(grep "^ *output database" /etc/snort/snort.conf | \
 DBLOG="/var/log/snort_${MYSQL_PGSQL}.html"
 DBCOM='select * from signature;'
 MAILTO="root@`hostname -f`"
+touch "$DBLOG" || exit 1
 
 case "$MYSQL_PGSQL" in
 mysql)
@@ -49,5 +50,7 @@ w3m -no-proxy -dump -cols 80 "${DBLOG}" | \
   mail -s "Snort db Signature Report `env LANG=C date '+%Y/%m/%d %H:%M%S'`" \
   "${MAILTO}"
 
+chown snort:adm "$DBLOG"
+chmod 750 "$DBLOG"
 unset DBCOM DBLOG MYSQL_PGSQL MAILTO
 exit 0
