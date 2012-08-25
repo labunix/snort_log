@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "302 Access Denied" 
 
 cat << EOS1
 Content-Type: text/html
