@@ -12,7 +12,7 @@ Content-Type: text/html
   <td>302 Access Denied</td>
 </tr>
 <tr>
-  <td>From</td>
+  <td>To/From</td>
   <td>
 EOS1
 
