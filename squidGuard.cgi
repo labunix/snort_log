@@ -8,20 +8,26 @@ Content-Type: text/html
 <br/>
 <table border="0">
 <tr>
-  <td>Browser</td>
-  <td>${HTTP_USER_AGENT}</td>
+  <td>Status</td>
+  <td>302 Access Denied</td>
 </tr>
 <tr>
   <td>From</td>
   <td>
 EOS1
 
-echo "${QUERY_STRING}<br/>" | \
-  sed s/"\?\|\+\|\&"/"<br\/>"/g | \
-  sed s/^/"\t"/g
-
+echo "${QUERY_STRING}" | \
+  # URI Encode
+  nkf -wMQ | tr '=' '%' | \
+  # URI Decode
+  tr '%' '=' | nkf -WwmQ | \
+  sed s/"\="/"\:"/g | sed s/"\&"/"<br\/>"/g
 cat << EOS2
   </td>
+</tr>
+<tr>
+  <td>Browser</td>
+  <td>${HTTP_USER_AGENT}</td>
 </tr>
 </table>
 <br/>
